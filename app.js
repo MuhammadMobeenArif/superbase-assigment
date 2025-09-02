@@ -1,14 +1,6 @@
 
 
-console.log("JavaScript Connected");
-
-const SUPABASE_URL = "https://zsyjqwlfzaikxnpetgwk.supabase.co";
-const SUPABASE_ANON_KEY ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzeWpxd2xmemFpa3hucGV0Z3drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY4MjcxMzEsImV4cCI6MjA3MjQwMzEzMX0.SOTRyokYnaUB2ACJeLuZwPXqUgEPyXa-v2AToltiNhw";
-
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-
-class BankAccount {
+class BankAccount
   constructor(owner, balance = 0) {
     this.owner = owner;
     this.balance = balance;
