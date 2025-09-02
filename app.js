@@ -25,7 +25,7 @@ class BankAccount
   }
 }
 
-const account = new BankAccount("Mobeen", 50000);
+const account = new BankAccount("Mobeen", 20000);
 
 const depositButton = document.getElementById("deposit");
 const withdrawButton = document.getElementById("withdraw");
