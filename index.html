@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank</title>
+    <link rel="stylesheet" href="style.css">
+       <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body  class=" bg-dark-grey">
+
+    <header  class=" flex  justify-center">
+        <input id="input"  class="bg-white   rounded align-top w-xl text-center p-1 m-2" type="text" placeholder="Deposit/Withdraw" >
+    </header>
+    <div class="   flex justify-center   " >
+        <button id="deposit" class="border cursor-pointer m-1 rounded bg-purple-500 p-2 hover:bg-violet-700  transition-0.3ms " >Deposit</button>
+        <button id="withdraw"  class="border cursor-pointer m-1 rounded bg-purple-500 p-2 hover:bg-violet-700"> Withdraw</button>
+      <button id="check-balance"  class="border cursor-pointer m-1 rounded bg-purple-500 p-2 hover:bg-violet-700">Check Balance</button> <!-- ✅ Correct -->
+    </div>
+   
+     <main>
+        <div class="bg-purple-500 border-white rounded w-full flex justify-center   h-full m-2 p-2  flex-col "    id="dashboard">
+        </div>
+
+        
+     </main>  
+
+    <script src="app.js"></script>
+</body>
+</html>
