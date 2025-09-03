@@ -1,1 +1,19 @@
 @import "tailwindcss";
+body {
+    font-family: sans-serif;
+    margin: 20px;
+    background: #f9f9f9;
+}
+
+input, button {
+    margin: 10px 0;
+    padding: 8px;
+}
+
+#notes-container > div {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
