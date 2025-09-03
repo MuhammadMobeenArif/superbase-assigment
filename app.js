@@ -1,72 +1,101 @@
+const supabaseUrl = 'https//zsyjqwlefzaikxnpetgwk.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzeWpxd2xmemFpa3hucGV0Z3drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY4MjcxMzEsImV4cCI6MjA3MjQwMzEzMX0.SOTRyokYnaUB2ACJeLuZwPXqUgEPyXa-v2AToltiNhw';
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const signupBtn = document.getElementById("signup");
+const loginBtn = document.getElementById("login");
 
 
-class BankAccount
-  constructor(owner, balance = 0) {
-    this.owner = owner;
-    this.balance = balance;
-  }
+signupBtn.addEventListener("click", async () => {
+    const { data, error } = await supabase.auth.signUp({
+        email: emailInput.value,
+        password: passwordInput.value,
+    })
 
-  deposit(amount) {
-    this.balance += amount;
-    return this.balance;
-  }
-
-  withdraw(amount) {
-    if (amount > this.balance) {
-      return null; // insufficient
-    } else {
-      this.balance -= amount;
-      return this.balance;
+    if (error) {
+        alert(error.message)
     }
-  }
 
-  checkBalance() {
-    return this.balance;
-  }
-}
+    console.log(data)
+})
 
-const account = new BankAccount("Mobeen", 20000);
 
-const depositButton = document.getElementById("deposit");
-const withdrawButton = document.getElementById("withdraw");
-const checkBalanceButton = document.getElementById("check-balance");
-const input = document.getElementById("input");
-const dashboardEl = document.getElementById("dashboard");
+loginBtn.addEventListener("click", async () => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email: emailInput.value,
+        password: passwordInput.value,
+    })
 
-const updateDashboard = (message) => {
-  const dashboardCard = document.createElement("div");
-  dashboardCard.className = "p-2 mb-2 rounded border border-white bg-purple-400 text-center text-white";
-  dashboardCard.textContent = message;
-  dashboardEl.appendChild(dashboardCard);
-};
-
-depositButton.addEventListener("click", () => {
-  const amount = parseFloat(input.value);
-  if (!isNaN(amount) && amount > 0) {
-    const newBalance = account.deposit(amount);
-    updateDashboard(`Deposited ${amount}. New balance: ${newBalance}`);
-  } else {
-    updateDashboard("Invalid deposit amount.");
-  }
-  input.value = "";
-});
-
-withdrawButton.addEventListener("click", () => {
-  const amount = parseFloat(input.value);
-  if (!isNaN(amount) && amount > 0) {
-    const newBalance = account.withdraw(amount);
-    if (newBalance !== null) {
-      updateDashboard(`Withdrew ${amount}. New balance: ${newBalance}`);
-    } else {
-      updateDashboard("Insufficient balance.");
+    if (error) {
+        alert(error.message)
     }
-  } else {
-    updateDashboard("Invalid withdrawal amount.");
-  }
-  input.value = "";
+
+    console.log(data)
 });
 
-checkBalanceButton.addEventListener("click", () => {
-  const currentBalance = account.checkBalance();
-  updateDashboard(`Current balance: ${currentBalance}`);
+
+
+
+(async () => {
+    const data = await supabase.auth.getSession()
+    const user = await supabase.auth.getUser()
+
+    console.log(user)
+
+    console.log("session data", data)
+})()
+
+
+
+
+
+const getBtn = document.getElementById("get-btn")
+const updateBtn = document.getElementById("update-btn")
+const addBtn = document.getElementById("add-btn")
+const titleInput = document.getElementById("title")
+const contentInput = document.getElementById("content")
+
+
+getBtn.addEventListener("click", async () => {
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+
+
+    if (userError) {
+        alert(userError.message)
+    }
+
+    const { data, error } = await supabase.from("notes").select("*").eq("user_id", user.id)
+
+    if (error) {
+        alert(error.message)
+        return
+    }
+
+    console.log(data)
 });
+
+updateBtn.addEventListener("click", async () => {
+    const { error } = await supabase.from("notes").update({ title: "Note 2" }).eq("id", 2)
+
+    if (error) {
+        alert(error.message)
+    }
+})
+
+addBtn.addEventListener("click", async () => {
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+
+
+    if (userError) {
+        alert(userError.message)
+    }
+
+    const { error } = await supabase.from("notes").insert({ title: titleInput.value, content: contentInput.value, user_id: user.id })
+
+    if (error) {
+        alert(error.message)
+    }
+
+})
