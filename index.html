@@ -4,28 +4,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bank</title>
-    <link rel="" href="style.css">
-       <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Notepad</title>
+    <link rel="stylesheet" href="style.css">
+    
 </head>
-<body  class=" bg-black">
+<body  >
 
-    <header  class=" flex  justify-center">
-        <input id="input"  class="bg-white   rounded align-top w-xl text-center p-1 m-2" type="text" placeholder="Deposit/Withdraw" >
-    </header>
-    <div class="   flex justify-center   " >
-        <button id="deposit" class="border cursor-pointer m-1 rounded bg-purple-500 p-2 hover:bg-violet-700  transition-0.3ms " >Deposit</button>
-        <button id="withdraw"  class="border cursor-pointer m-1 rounded bg-purple-500 p-2 hover:bg-violet-700"> Withdraw</button>
-      <button id="check-balance"  class="border cursor-pointer m-1 rounded bg-purple-500 p-2 hover:bg-violet-700">Check Balance</button> <!-- ✅ Correct -->
-    </div>
-   
-     <main>
-        <div class="bg-purple-500 border-white rounded w-full flex justify-center   h-full m-2 p-2  flex-col "    id="dashboard">
+
+    <header class="px-4 pt-8">
+        <div class="mx-auto max-w-3xl flex items-start justify-between gap-4">
+            <div>
+                <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight">
+                    <span
+                        class="bg-gradient-to-r from-emerald-400 via-teal-300 to-sky-400 bg-clip-text text-transparent">Supabase
+                        Notes</span>
+                </h1>
+                <p class="mt-2 text-slate-400">
+                    Simple, fast, and secure notes with Supabase.
+                </p>
+            </div>
+          
         </div>
+    </header>
 
-        
-     </main>  
+    <main class="px-4 pb-16">
+        <div class="mx-auto mt-8 grid max-w-3xl gap-6">
+            <section id="auth-section"
+                class="rounded-2xl border border-slate-800/60 bg-slate-900/60 backdrop-blur p-5 sm:p-6">
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <h2 class="text-lg font-medium text-emerald-300">
+                            Login or Create an account
+                        </h2>
+                        <p class="mt-1 text-sm text-slate-400">
+                            Use email and password to continue.
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                    <div class="grid gap-2">
+                        <label for="email" class="text-sm text-slate-300">Email</label>
+                        <input id="email" type="email" placeholder="you@example.com"
+                            class="w-full rounded-xl border border-slate-700 bg-slate-800/60 px-3 py-2 text-slate-100 placeholder-slate-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-700/40 outline-none" />
+                    </div>
+                    <div class="grid gap-2">
+                        <label for="password" class="text-sm text-slate-300">Password</label>
+                        <input id="password" type="password" placeholder="••••••••"
+                            class="w-full rounded-xl border border-slate-700 bg-slate-800/60 px-3 py-2 text-slate-100 placeholder-slate-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-700/40 outline-none" />
+                    </div>
+                </div>
+                <div class="mt-4 flex flex-wrap items-center gap-3">
+                    <button id="signup"
+                        class="inline-flex items-center justify-center rounded-xl bg-gradient-to-b from-emerald-500 to-emerald-600 px-4 py-2 text-sm font-medium text-emerald-50 shadow-lg shadow-emerald-600/20 ring-1 ring-inset ring-emerald-400/30 hover:from-emerald-400 hover:to-emerald-600">
+                        Sign Up
+                    </button>
+                    <button id="login"
+                        class="inline-flex items-center justify-center rounded-xl border border-slate-700 bg-slate-800/60 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-700/60">
+                        Login
+                    </button>
+                </div>
+            </section>
 
+            <section id="notes-section" style="display: none"
+                class="rounded-2xl border border-slate-800/60 bg-slate-900/60 backdrop-blur p-5 sm:p-6">
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <h2 class="text-lg font-medium text-emerald-300">Your Notes</h2>
+                    <div class="w-full sm:w-auto">
+                        <input id="search" type="text" placeholder="Search notes..."
+                            class="w-full sm:w-64 rounded-xl border border-slate-700 bg-slate-800/60 px-3 py-2 text-sm leading-6 text-slate-100 placeholder-slate-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-700/40 outline-none" />
+                    </div>
+                </div>
+                <div class="mt-2 flex flex-col gap-2">
+                    <input id="new-title" type="text" placeholder="Note title"
+                        class="w-full rounded-xl border border-slate-700 bg-slate-800/60 px-3 py-2 text-sm leading-6 text-slate-100 placeholder-slate-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-700/40 outline-none" />
+                    <textarea id="new-note" placeholder="Write your note..."
+                        class="w-full rounded-xl border border-slate-700 bg-slate-800/60 px-3 py-2 text-sm leading-6 text-slate-100 placeholder-slate-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-700/40 outline-none min-h-[80px]"></textarea>
+                    <div class="flex items-center justify-end gap-2">
+                        <button id="cancel-edit"
+                            class="hidden inline-flex items-center justify-center rounded-xl border border-slate-700 bg-slate-800/60 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-700/60">
+                            Cancel
+                        </button>
+                        <button id="add-note"
+                            class="inline-flex items-center justify-center rounded-xl bg-gradient-to-b from-sky-500 to-sky-600 px-4 py-2 text-sm font-medium text-sky-50 shadow-lg shadow-sky-600/20 ring-1 ring-inset ring-sky-400/30 hover:from-sky-400 hover:to-sky-600">
+                            Add Note
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <div id="notes-loader"
+                        class="hidden flex items-center justify-center gap-3 rounded-xl border border-slate-800 bg-slate-800/40 p-4">
+                        <span
+                            class="inline-block h-5 w-5 rounded-full border-2 border-emerald-400 border-t-transparent animate-spin"></span>
+                        <span class="text-sm text-slate-400">Loading notes...</span>
+                    </div>
+                    <div id="notes-empty"
+                        class="hidden mt-3 rounded-xl border border-slate-800 bg-slate-800/40 p-6 text-center text-slate-400">
+                        No notes yet. Create your first note above.
+                    </div>
+                    <ul id="notes-list" class="mt-3 grid gap-3"></ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <button id="get-btn" class="bg-blue-500 p-2 rounded-md"> Get data</button>
+    <button id="update-btn" class="bg-blue-500 p-2 rounded-md"> Update data</button>
+    <br>
+
+    <input type="text" id="title" placeholder="Please add your title" class="border-2 border-gray-300 p-2 rounded-md ">
+    <input type="text" id="content" placeholder="Please add your content" class="border-2 border-gray-300 p-2 rounded-md ">
+    <button id="add-btn" class="bg-blue-500 p-2 rounded-md"> Add data</button>
+    <input type="file" id="image-upload" />
+    <div id="notes-container"></div>
+
+    
+
+
+         <script src="https://unpkg.com/@supabase/supabase-js@2"></script> 
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> 
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script src="app.js"></script>
-</body>
+</body  
 </html>
