@@ -1,101 +1,48 @@
+
 const supabaseUrl = 'https//zsyjqwlefzaikxnpetgwk.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzeWpxd2xmemFpa3hucGV0Z3drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY4MjcxMzEsImV4cCI6MjA3MjQwMzEzMX0.SOTRyokYnaUB2ACJeLuZwPXqUgEPyXa-v2AToltiNhw';
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+console.log(supabase);
 
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-const signupBtn = document.getElementById("signup");
-const loginBtn = document.getElementById("login");
+const signupBtn=document.querySelector("#signup");
+signupBtn.addEventListener("click",async()=>{
+const email=document.querySelector("#email").value ;
+console.log(email);
 
+const password=document.querySelector("#password").value ;
+console.log(password);
 
-signupBtn.addEventListener("click", async () => {
-    const { data, error } = await supabase.auth.signUp({
-        email: emailInput.value,
-        password: passwordInput.value,
-    })
+const confirmPassword=document.querySelector("#confirmPassword").value ;
+console.log(confirmPassword);
 
-    if (error) {
-        alert(error.message)
-    }
+if (!email || !password || !confirmPassword) {
+    alert("All fields are required!");
+}
 
-    console.log(data)
+if (password !== confirmPassword) {
+    alert("Passwords do not match!");
+    return;
+}
+
+// Supabase Signup
+const { data, error } = await supabase.auth.signUp({
+  email,
+  password,
+   options: {
+    emailRedirectTo: "http://127.0.0.1:5500/login.html"
+  }
 })
 
+if (error) {
+    alert(error.message)
+} else {
+    alert("Account created! Please check your email to confirm.");
+}
 
-loginBtn.addEventListener("click", async () => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-        email: emailInput.value,
-        password: passwordInput.value,
-    })
-
-    if (error) {
-        alert(error.message)
-    }
-
-    console.log(data)
-});
-
-
-
-
-(async () => {
-    const data = await supabase.auth.getSession()
-    const user = await supabase.auth.getUser()
-
-    console.log(user)
-
-    console.log("session data", data)
-})()
-
-
-
-
-
-const getBtn = document.getElementById("get-btn")
-const updateBtn = document.getElementById("update-btn")
-const addBtn = document.getElementById("add-btn")
-const titleInput = document.getElementById("title")
-const contentInput = document.getElementById("content")
-
-
-getBtn.addEventListener("click", async () => {
-    const { data: { user }, error: userError } = await supabase.auth.getUser()
-
-
-    if (userError) {
-        alert(userError.message)
-    }
-
-    const { data, error } = await supabase.from("notes").select("*").eq("user_id", user.id)
-
-    if (error) {
-        alert(error.message)
-        return
-    }
-
-    console.log(data)
-});
-
-updateBtn.addEventListener("click", async () => {
-    const { error } = await supabase.from("notes").update({ title: "Note 2" }).eq("id", 2)
-
-    if (error) {
-        alert(error.message)
-    }
 })
 
-addBtn.addEventListener("click", async () => {
-    const { data: { user }, error: userError } = await supabase.auth.getUser()
-
-
-    if (userError) {
-        alert(userError.message)
-    }
-
-    const { error } = await supabase.from("notes").insert({ title: titleInput.value, content: contentInput.value, user_id: user.id })
-
-    if (error) {
-        alert(error.message)
-    }
-
+// Already Account
+const alreadyAccount=document.querySelector("#alreadyAccount");
+alreadyAccount.addEventListener("click",()=>{
+window.location.href="login.html";
 })
